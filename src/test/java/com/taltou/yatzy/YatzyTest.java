@@ -1,114 +1,151 @@
 package com.taltou.yatzy;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class YatzyTest {
 
     @Test
-    public void chance_scores_sum_of_all_dice() {
-        int expected = 15;
-        int actual = Yatzy.chance(2,3,4,5,1);
-        assertEquals(expected, actual);
-        assertEquals(16, Yatzy.chance(3,3,4,5,1));
-    }
+    @DisplayName("Should return the sum of all the dice, regardless of what he reads.")
+    public void chanceTest() {
+        assertEquals(14, Yatzy.computeChance(1,1,3,3,6));
+        assertEquals(21, Yatzy.computeChance(4,5,5,6,1));
+        assertEquals(15, Yatzy.computeChance(2,3,4,5,1));
+        assertEquals(16, Yatzy.computeChance(3,3,4,5,1));
 
-    @Test public void yatzy_scores_50() {
-        int expected = 50;
-        int actual = Yatzy.yatzy(4,4,4,4,4);
-        assertEquals(expected, actual);
-        assertEquals(50, Yatzy.yatzy(6,6,6,6,6));
-        assertEquals(0, Yatzy.yatzy(6,6,6,6,3));
     }
-
-    @Test public void test_1s() {
-        assertTrue(Yatzy.ones(1,2,3,4,5) == 1);
-        assertEquals(2, Yatzy.ones(1,2,1,4,5));
-        assertEquals(0, Yatzy.ones(6,2,2,4,5));
-        assertEquals(4, Yatzy.ones(1,2,1,1,1));
+    @Test
+    @DisplayName("Should return 50 points If all the dice have the same number.")
+    public void yatzyTest() {
+        assertEquals(50, Yatzy.computeYatzy(1,1,1,1,1));
+        assertEquals(0, Yatzy.computeYatzy(1,1,1,2,1));
+        assertEquals(50, Yatzy.computeYatzy(4,4,4,4,4));
+        assertEquals(50, Yatzy.computeYatzy(6,6,6,6,6));
+        assertEquals(0, Yatzy.computeYatzy(6,6,6,6,3));
+    }
+    @Test
+    @DisplayName("Should return the sum of the dice which reads one.")
+    public void OnesTest() {
+        assertEquals(0, Yatzy.computeOnes(3,3,3,4,5));
+        assertEquals(1, Yatzy.computeOnes(1,2,3,4,5));
+        assertEquals(2, Yatzy.computeOnes(1,2,1,4,5));
+        assertEquals(0, Yatzy.computeOnes(6,2,2,4,5));
+        assertEquals(4, Yatzy.computeOnes(1,2,1,1,1));
+    }
+    @Test
+    @DisplayName("Should return the sum of the dice which reads two.")
+    public void twosTest() {
+        assertEquals(4, Yatzy.computeTwos(2,3,2,5,1));
+        assertEquals(4, Yatzy.computeTwos(1,2,3,2,6));
+        assertEquals(10, Yatzy.computeTwos(2,2,2,2,2));
     }
 
     @Test
-    public void test_2s() {
-        assertEquals(4, Yatzy.twos(1,2,3,2,6));
-        assertEquals(10, Yatzy.twos(2,2,2,2,2));
+    @DisplayName("Should return the sum of the dice which reads three.")
+    public void threesTest() {
+        assertEquals(6, Yatzy.computeThrees(1,2,3,2,3));
+        assertEquals(12, Yatzy.computeThrees(2,3,3,3,3));
     }
 
     @Test
-    public void test_threes() {
-        assertEquals(6, Yatzy.threes(1,2,3,2,3));
-        assertEquals(12, Yatzy.threes(2,3,3,3,3));
-    }
-
-    @Test
-    public void fours_test() 
+    @DisplayName("Should return the sum of the dice which reads four.")
+    public void foursTest()
     {
-        assertEquals(12, new Yatzy(4,4,4,5,5).fours());
-        assertEquals(8, new Yatzy(4,4,5,5,5).fours());
-        assertEquals(4, new Yatzy(4,5,5,5,5).fours());
+        assertEquals(8, Yatzy.computeFours(1,1,2,4,4));
+        assertEquals(12, Yatzy.computeFours(4,4,4,5,5));
+        assertEquals(8, Yatzy.computeFours(4,4,5,5,5));
+        assertEquals(4, Yatzy.computeFours(4,5,5,5,5));
     }
 
     @Test
-    public void fives() {
-        assertEquals(10, new Yatzy(4,4,4,5,5).fives());
-        assertEquals(15, new Yatzy(4,4,5,5,5).fives());
-        assertEquals(20, new Yatzy(4,5,5,5,5).fives());
+    @DisplayName("Should return the sum of the dice which reads five.")
+    public void fivesTest() {
+        assertEquals(10, Yatzy.computeFives(4,4,4,5,5));
+        assertEquals(15, Yatzy.computeFives(4,4,5,5,5));
+        assertEquals(20, Yatzy.computeFives(4,5,5,5,5));
     }
 
     @Test
-    public void sixes_test() {
-        assertEquals(0, new Yatzy(4,4,4,5,5).sixes());
-        assertEquals(6, new Yatzy(4,4,6,5,5).sixes());
-        assertEquals(18, new Yatzy(6,5,6,6,5).sixes());
+    @DisplayName("Should return the sum of the dice which reads six.")
+    public void sixesTest() {
+        assertEquals(0, Yatzy.computeSixes(4,4,4,5,5));
+        assertEquals(6, Yatzy.computeSixes(4,4,6,5,5));
+        assertEquals(18, Yatzy.computeSixes(6,5,6,6,5));
     }
 
     @Test
-    public void one_pair() {
-        assertEquals(6, Yatzy.score_pair(3,4,3,5,6));
-        assertEquals(10, Yatzy.score_pair(5,3,3,3,5));
-        assertEquals(12, Yatzy.score_pair(5,3,6,6,5));
+    @DisplayName("Should return the sum of the two highest dice.")
+    public void onePairTest() {
+        assertEquals(0, Yatzy.computeScorePair(1,2,3,4,5));
+        assertEquals(8, Yatzy.computeScorePair(3,3,3,4,4));
+        assertEquals(12, Yatzy.computeScorePair(1,1,6,2,6));
+        assertEquals(6, Yatzy.computeScorePair(3,3,3,4,1));
+        assertEquals(6, Yatzy.computeScorePair(3,3,3,3,1));
+        assertEquals(6, Yatzy.computeScorePair(3,4,3,5,6));
+        assertEquals(10, Yatzy.computeScorePair(5,3,3,3,5));
+        assertEquals(12, Yatzy.computeScorePair(5,3,6,6,5));
     }
 
     @Test
-    public void two_Pair() {
-        assertEquals(16, Yatzy.two_pair(3,3,5,4,5));
-        assertEquals(16, Yatzy.two_pair(3,3,5,5,5));
+    @DisplayName("Should return the sum of two pairs of dice with the same number.")
+    public void twoPairTest() {
+        assertEquals(8, Yatzy.computeTwoPair(1,1,2,3,3));
+        assertEquals(0, Yatzy.computeTwoPair(1,1,2,3,4));
+        assertEquals(0, Yatzy.computeTwoPair( 3,3,3,3,1));
+        assertEquals(0, Yatzy.computeTwoPair(3,3,3,3,1));
+        assertEquals(16, Yatzy.computeTwoPair(3,3,5,4,5));
+        assertEquals(16, Yatzy.computeTwoPair(3,3,5,5,5));
     }
 
     @Test
-    public void three_of_a_kind() 
+    @DisplayName("Should return the sum of three dice with the same number.")
+    public void threeOfAKindTest()
     {
-        assertEquals(9, Yatzy.three_of_a_kind(3,3,3,4,5));
-        assertEquals(15, Yatzy.three_of_a_kind(5,3,5,4,5));
-        assertEquals(9, Yatzy.three_of_a_kind(3,3,3,3,5));
+        assertEquals(9, Yatzy.computeThreeOfAKind(3,3,3,4,5));
+        assertEquals(0, Yatzy.computeThreeOfAKind(3,3,4,5,6));
+        assertEquals(9, Yatzy.computeThreeOfAKind(3,3,3,3,1));
+        assertEquals(9, Yatzy.computeThreeOfAKind(3,3,3,4,5));
+        assertEquals(15, Yatzy.computeThreeOfAKind(5,3,5,4,5));
+        assertEquals(9, Yatzy.computeThreeOfAKind(3,3,3,3,5));
+        assertEquals(9, Yatzy.computeThreeOfAKind(3,3,3,3,3));
     }
 
     @Test
-    public void four_of_a_knd() {
-        assertEquals(12, Yatzy.four_of_a_kind(3,3,3,3,5));
-        assertEquals(20, Yatzy.four_of_a_kind(5,5,5,4,5));
-        assertEquals(9, Yatzy.three_of_a_kind(3,3,3,3,3));
+    @DisplayName("Should return the sum of four dice with the same number.")
+    public void fourOfAKindTest() {
+        assertEquals(8, Yatzy.couputeFourOfAKind(2,2,2,2,5));
+        assertEquals(0, Yatzy.couputeFourOfAKind(2,2,2,5,5));
+        assertEquals(8, Yatzy.couputeFourOfAKind( 2,2,2,2,2));
+        assertEquals(12, Yatzy.couputeFourOfAKind(3,3,3,3,5));
+        assertEquals(20, Yatzy.couputeFourOfAKind(5,5,5,4,5));
     }
 
     @Test
-    public void smallStraight() {
-        assertEquals(15, Yatzy.smallStraight(1,2,3,4,5));
-        assertEquals(15, Yatzy.smallStraight(2,3,4,5,1));
-        assertEquals(0, Yatzy.smallStraight(1,2,2,4,5));
+    @DisplayName("Should return the sum of all dices if the dice are on a small straight line.")
+    public void smallStraightTest() {
+        assertEquals(15, Yatzy.computeSmallStraight(1,2,3,4,5));
+        assertEquals(15, Yatzy.computeSmallStraight(2,3,4,5,1));
+        assertEquals(0, Yatzy.computeSmallStraight(1,2,2,4,5));
     }
 
     @Test
-    public void largeStraight() {
-        assertEquals(20, Yatzy.largeStraight(6,2,3,4,5));
-        assertEquals(20, Yatzy.largeStraight(2,3,4,5,6));
-        assertEquals(0, Yatzy.largeStraight(1,2,2,4,5));
+    @DisplayName("Should return the sum of all dices if the dice are on a large straight line.")
+    public void largeStraightTest() {
+        assertEquals(20, Yatzy.computeLargeStraight(6,2,3,4,5));
+        assertEquals(20, Yatzy.computeLargeStraight(2,3,4,5,6));
+        assertEquals(0, Yatzy.computeLargeStraight(1,2,2,4,5));
     }
 
     @Test
-    public void fullHouse() {
-        assertEquals(18, Yatzy.fullHouse(6,2,2,2,6));
-        assertEquals(0, Yatzy.fullHouse(2,3,4,5,6));
+    @DisplayName("Should return the sum of all dices If the dice are two and three of a kind.")
+    public void fullHouseTest() {
+        assertEquals(18, Yatzy.computeFullHouse(6,2,2,2,6));
+        assertEquals(0, Yatzy.computeFullHouse(2,3,4,5,6));
+        assertEquals(8, Yatzy.computeFullHouse( 1,1,2,2,2 ));
+        assertEquals(0, Yatzy.computeFullHouse( 2,2,3,3,4));
+        assertEquals(0, Yatzy.computeFullHouse( 4,4,4,4,4));
+
     }
 }
