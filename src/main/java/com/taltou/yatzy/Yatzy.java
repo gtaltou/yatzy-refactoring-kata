@@ -8,17 +8,26 @@ public class Yatzy {
     {
         return roll.sumNumber();
     }
-    public static int computeYatzy(Roll roll)  {
+    public static int computeYatzy(Roll roll)
+    {
         return roll.isYatzy() ? 50: 0;
     }
-    public static int computeOnes(Roll roll){
+    public static int computeOnes(Roll roll)
+    {
         return roll.countDie(1);
     }
-    public static int computeTwos(Roll roll) {
+    public static int computeTwos(Roll roll)
+    {
         return roll.countDie(2) * 2;
     }
-    public static int computeThrees(Roll roll) { return roll.countDie(3) * 3; }
-    public static int computeFours(Roll roll)  { return roll.countDie(4) * 4; }
+    public static int computeThrees(Roll roll)
+    {
+        return roll.countDie(3) * 3;
+    }
+    public static int computeFours(Roll roll)  {
+
+        return roll.countDie(4) * 4;
+    }
     public static int computeFives(Roll roll)
     {
         return roll.countDie(5) * 5;
