@@ -17,10 +17,8 @@ public class Yatzy {
     public static int computeTwos(Roll roll) {
         return roll.countDie(2) * 2;
     }
-    public static int computeThrees(Roll roll) {
-        return roll.countDie(3) * 3;
-    }
-    public static int computeFours(Roll roll)  { return roll.countDie(4) * 4;    }
+    public static int computeThrees(Roll roll) { return roll.countDie(3) * 3; }
+    public static int computeFours(Roll roll)  { return roll.countDie(4) * 4; }
     public static int computeFives(Roll roll)
     {
         return roll.countDie(5) * 5;
@@ -55,7 +53,7 @@ public class Yatzy {
     {
         return roll.handleKind(4) * 4;
     }
-      public static int computeSmallStraight(Roll roll)
+    public static int computeSmallStraight(Roll roll)
     {
        return roll.isSmallStraight() ? 15 : 0;
     }
