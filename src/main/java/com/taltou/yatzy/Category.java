@@ -19,10 +19,12 @@ public enum Category {
     LargeStraight(com.taltou.yatzy.Yatzy::computeLargeStraight),
     FullHouse(com.taltou.yatzy.Yatzy::computeFullHouse);
     private final Function<Roll, Integer> score;
+
     Category(Function<Roll, Integer> score) {
         this.score = score;
     }
-    public int computeScore(Roll roll){
+
+    public int computeScore(Roll roll) {
         return this.score.apply(roll);
     }
 }
